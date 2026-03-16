@@ -29,6 +29,8 @@ public class PlayerRunTimeStats
         {
             { StatType.MoveSpeed, new RunTimeStats(data.moveSpeed) },
             { StatType.PlayerDamage, new RunTimeStats(data.playerDamage) },
+            { StatType.CoolTime, new RunTimeStats(data.coolTime) },
+            { StatType.BulletSpeed, new RunTimeStats(data.bulletSpeed) },
         };
     }
 
