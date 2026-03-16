@@ -34,6 +34,8 @@ public class BulletSpawner : MonoBehaviour
 
             Bullet bullet = pool.Get();
 
+            bullet.transform.position = SpawnPosition();
+
             yield return new WaitForSeconds(spawnTime);
         }
     }
@@ -49,6 +51,13 @@ public class BulletSpawner : MonoBehaviour
         bullet.SetPool(pool);
 
         return bullet;
+    }
+
+    private Vector2 SpawnPosition()
+    {
+        Vector2 playerPosition = transform.position;
+
+        return playerPosition;
     }
 
     public void OnGet(Bullet bullet)

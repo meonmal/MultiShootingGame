@@ -1,10 +1,13 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed;
+    [SerializeField]
+    private float xLimit;
 
+    private float speed;
     private Rigidbody2D rigid;
     private Player player;
 
@@ -32,5 +35,15 @@ public class Bullet : MonoBehaviour
         speed = player.GetStats(StatType.BulletSpeed);
 
         rigid.linearVelocity = Vector2.right * speed;
+
+        if(transform.position.x >= xLimit)
+        {
+            ThisRelease();
+        }
+    }
+
+    private void ThisRelease()
+    {
+        this._pool.Release(this);
     }
 }
