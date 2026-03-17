@@ -31,6 +31,17 @@ public class Enemy : MonoBehaviour, IDamageble
         Movement();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        IDamageble iDamageble = collision.GetComponent<IDamageble>();
+
+        if(iDamageble != null && collision.CompareTag("Player"))
+        {
+            iDamageble.TakeDamage(enemyStats.EnemyDamage);
+            ThisRelease();
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
@@ -55,5 +66,10 @@ public class Enemy : MonoBehaviour, IDamageble
     private void Movement()
     {
         rigid.linearVelocity = Vector2.left * enemyStats.EnemySpeed;
+    }
+
+    private void ThisRelease()
+    {
+        this._pool.Release(this);
     }
 }

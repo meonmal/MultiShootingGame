@@ -36,3 +36,9 @@ MonoBehaviour:
   - 5
   - 6
   - 7
+  playerHP:
+  - 10
+  - 20
+  - 30
+  - 50
+  - 70

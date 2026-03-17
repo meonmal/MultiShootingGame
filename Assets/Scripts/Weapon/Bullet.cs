@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     private float xLimit;
 
     private float speed;
+    private float damage;
     private Rigidbody2D rigid;
     private Player player;
 
@@ -28,6 +29,20 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        IDamageble iDamageble = collision.GetComponent<IDamageble>();
+
+        if(iDamageble != null && collision.CompareTag("Enemy"))
+        {
+            damage = player.GetStats(StatType.PlayerDamage);
+
+            iDamageble.TakeDamage(damage);
+
+            ThisRelease();
+        }
     }
 
     private void Movement()

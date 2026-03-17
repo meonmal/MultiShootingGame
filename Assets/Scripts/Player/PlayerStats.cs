@@ -8,6 +8,7 @@ public enum StatType
     PlayerDamage,
     CoolTime,
     BulletSpeed, 
+    PlayerHP,
 }
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
@@ -38,4 +39,9 @@ public class PlayerStats : ScriptableObject
     /// 총알의 이동속도
     /// </summary>
     public List<float> bulletSpeed;
+
+    /// <summary>
+    /// 플레이어의 최대 HP
+    /// </summary>
+    public List<float> playerHP;
 }

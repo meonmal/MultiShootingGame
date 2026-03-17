@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageble
 {
     /// <summary>
     /// 플레이어의 스탯 SO
@@ -8,11 +8,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PlayerStats playerStats;
 
-    private PlayerRunTimeStats runtime;
+    private float currentHP;
 
+    private PlayerRunTimeStats runtime;
+    
     private void Awake()
     {
         runtime = new PlayerRunTimeStats(playerStats);
+    }
+
+    private void Start()
+    {
+        currentHP = GetStats(StatType.PlayerHP);
     }
 
     public float GetStats(StatType type)
@@ -23,5 +30,12 @@ public class Player : MonoBehaviour
     public void LeveUp(StatType type)
     {
         runtime.LevelUp(type);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP -= damage;
+
+        Debug.Log(currentHP);
     }
 }
