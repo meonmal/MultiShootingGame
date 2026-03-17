@@ -48,6 +48,11 @@ public class RunTimeStats
     /// 0 미만 또는 최대 레벨(values.Count - 1)을 초과하지 않도록 제한한다.
     public void LevelUp()
     {
+        if (IsMax)
+        {
+            return;
+        }
+
         currentLevel = Mathf.Clamp(currentLevel + 1, 0, values.Count - 1);
     }
 }
