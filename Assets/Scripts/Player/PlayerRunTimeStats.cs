@@ -35,6 +35,31 @@ public class PlayerRunTimeStats
         };
     }
 
+    public List<StatType> GetAvailableStats()
+    {
+        List<StatType> result = new List<StatType>();
+
+        foreach (var pair in stats)
+        {
+            if (!pair.Value.IsMax)
+            {
+                result.Add(pair.Key);
+            }
+        }
+
+        return result;
+    }
+
+    public float GetNextStat(StatType type)
+    {
+        return stats[type].GetNextValue();
+    }
+
+    public float GetDelta(StatType type)
+    {
+        return stats[type].GetDelta();
+    }
+
     /// <summary>
     /// 외부에서 값을 가져갈 때 쓸 함수
     /// </summary>

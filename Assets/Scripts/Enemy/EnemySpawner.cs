@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     private float spawnTime;
     [SerializeField]
     private Enemy[] enemyPrefabs;
+    [SerializeField]
+    private PlayerExperience playerExperience;
 
     private Collider2D coll;
 
@@ -37,6 +39,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Enemy enemy = pool.Get();
             enemy.transform.position = SpawnPosition();
+            enemy.Init(playerExperience);
 
             yield return new WaitForSeconds(spawnTime);
         }

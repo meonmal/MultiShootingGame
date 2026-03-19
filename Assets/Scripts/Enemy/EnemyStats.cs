@@ -15,7 +15,7 @@ public class EnemyStats : ScriptableObject
     private float enemyHP;
 
     [SerializeField]
-    private float enemyCoolTime;
+    private float enemyExp;
 
     /*
     적은 버프, 디버프가 필요 없고 ScriptableObject를 몬스터의 갯수대로 만들면 되기 때문에
@@ -30,5 +30,5 @@ public class EnemyStats : ScriptableObject
 
     public float EnemyHP => enemyHP;
 
-    public float EnemyCoolTime => enemyCoolTime;
+    public float EnemyExp => enemyExp;
 }

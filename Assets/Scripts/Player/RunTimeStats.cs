@@ -55,4 +55,18 @@ public class RunTimeStats
 
         currentLevel = Mathf.Clamp(currentLevel + 1, 0, values.Count - 1);
     }
+
+    public float GetNextValue()
+    {
+        if (IsMax)
+            return Values;
+
+        int nextLevel = Mathf.Clamp(currentLevel + 1, 0, values.Count - 1);
+        return values[nextLevel];
+    }
+
+    public float GetDelta()
+    {
+        return GetNextValue() - Values;
+    }
 }

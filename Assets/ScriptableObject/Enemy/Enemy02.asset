@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyDamage: 2
   enemySpeed: 1
   enemyHP: 3
-  enemyCoolTime: 5
+  enemyExp: 3

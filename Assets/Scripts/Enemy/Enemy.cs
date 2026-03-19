@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamageble
 
     private Rigidbody2D rigid;
     private IObjectPool<Enemy> _pool;
+    private PlayerExperience _playerExperience;
 
     public void SetPool(IObjectPool<Enemy> pool)
     {
@@ -21,8 +22,9 @@ public class Enemy : MonoBehaviour, IDamageble
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
+    public void Init(PlayerExperience playerExperience)
     {
+        _playerExperience = playerExperience;
         currentHP = enemyStats.EnemyHP;
     }
 
@@ -54,6 +56,11 @@ public class Enemy : MonoBehaviour, IDamageble
 
     private void Die()
     {
+        if(_playerExperience != null)
+        {
+            _playerExperience.AddExp(enemyStats.EnemyExp);
+        }
+
         if (_pool == null)
         {
             Destroy(gameObject);

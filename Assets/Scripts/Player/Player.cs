@@ -7,19 +7,28 @@ public class Player : MonoBehaviour, IDamageble
     /// </summary>
     [SerializeField]
     private PlayerStats playerStats;
+    [SerializeField]
+    private LevelUpManager levelUpManager;
 
     private float currentHP;
 
     private PlayerRunTimeStats runtime;
+    private PlayerExperience playerexperience;
+
+    public float CurrentHP => currentHP;
+    public PlayerExperience PlayerExperience => playerexperience;
+    public PlayerRunTimeStats RunTimeStats => runtime;
     
     private void Awake()
     {
         runtime = new PlayerRunTimeStats(playerStats);
+        playerexperience = GetComponent<PlayerExperience>();
     }
 
     private void Start()
     {
         currentHP = GetStats(StatType.PlayerHP);
+        levelUpManager.Init(this);
     }
 
     public float GetStats(StatType type)
@@ -35,7 +44,5 @@ public class Player : MonoBehaviour, IDamageble
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
-
-        Debug.Log(currentHP);
     }
 }
