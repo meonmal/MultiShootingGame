@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     private Enemy[] enemyPrefabs;
     [SerializeField]
     private PlayerExperience playerExperience;
+    [SerializeField]
+    private BuffDropManager buffDropManager;
 
     private Collider2D coll;
 
@@ -39,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Enemy enemy = pool.Get();
             enemy.transform.position = SpawnPosition();
-            enemy.Init(playerExperience);
+            enemy.Init(playerExperience, buffDropManager);
 
             yield return new WaitForSeconds(spawnTime);
         }

@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour, IDamageble
     private Rigidbody2D rigid;
     private IObjectPool<Enemy> _pool;
     private PlayerExperience _playerExperience;
+    private BuffDropManager buffDropManager;
 
     public void SetPool(IObjectPool<Enemy> pool)
     {
@@ -22,9 +23,10 @@ public class Enemy : MonoBehaviour, IDamageble
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(PlayerExperience playerExperience)
+    public void Init(PlayerExperience playerExperience, BuffDropManager dropManager)
     {
         _playerExperience = playerExperience;
+        buffDropManager = dropManager;
         currentHP = enemyStats.EnemyHP;
     }
 
@@ -56,10 +58,12 @@ public class Enemy : MonoBehaviour, IDamageble
 
     private void Die()
     {
-        if(_playerExperience != null)
+        if (_playerExperience != null)
         {
             _playerExperience.AddExp(enemyStats.EnemyExp);
         }
+
+        buffDropManager?.TryDrop(transform.position);
 
         if (_pool == null)
         {

@@ -18,13 +18,17 @@ public class PlayerRunTimeStats
     /// </summary>
     private Dictionary<StatType, RunTimeStats> stats;
 
+    private PlayerBuffController buffController;
+
     /// <summary>
     /// PlayerStats에 저장된 스탯 데이터를 기반으로
     /// 런타임 스탯 Dictionary를 초기화하는 생성자
     /// </summary>
     /// <param name="data">PlayerStats의 스탯</param>
-    public PlayerRunTimeStats(PlayerStats data)
+    public PlayerRunTimeStats(PlayerStats data, PlayerBuffController buffController)
     {
+        this.buffController = buffController;
+
         stats = new Dictionary<StatType, RunTimeStats>
         {
             { StatType.MoveSpeed, new RunTimeStats(data.moveSpeed) },
@@ -61,11 +65,23 @@ public class PlayerRunTimeStats
     }
 
     /// <summary>
+    /// 버프가 적용되지 않은 기본 런타임 스탯 값
+    /// </summary>
+    public float GetBaseStat(StatType type) => stats[type].Values;
+
+    /// <summary>
     /// 외부에서 값을 가져갈 때 쓸 함수
     /// </summary>
     /// <param name="type">쓸 스탯의 키</param>
     /// <returns>현재 레벨에 해당하는 스탯의 값</returns>
-    public float GetStat(StatType type) => stats[type].Values;
+    public float GetStat(StatType type)
+    {
+        float baseValue = stats[type].Values;
+        float addValue = buffController != null ? buffController.GetAddValue(type) : 0f;
+        float multiplyValue = buffController != null ? buffController.GetMultiplyValue(type) : 1f;
+
+        return (baseValue + addValue) * multiplyValue;
+    }
 
     /// <summary>
     /// 지정한 스탯의 레벨을 1 증가시킨다.

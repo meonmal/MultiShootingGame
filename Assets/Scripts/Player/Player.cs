@@ -9,11 +9,14 @@ public class Player : MonoBehaviour, IDamageble
     private PlayerStats playerStats;
     [SerializeField]
     private LevelUpManager levelUpManager;
+    [SerializeField]
+    private UIManager uiManager;
 
     private float currentHP;
 
     private PlayerRunTimeStats runtime;
     private PlayerExperience playerexperience;
+    private PlayerBuffController buffController;
 
     public float CurrentHP => currentHP;
     public PlayerExperience PlayerExperience => playerexperience;
@@ -21,8 +24,9 @@ public class Player : MonoBehaviour, IDamageble
     
     private void Awake()
     {
-        runtime = new PlayerRunTimeStats(playerStats);
+        buffController = GetComponent<PlayerBuffController>();
         playerexperience = GetComponent<PlayerExperience>();
+        runtime = new PlayerRunTimeStats(playerStats,buffController);
     }
 
     private void Start()
@@ -44,5 +48,15 @@ public class Player : MonoBehaviour, IDamageble
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
+    }
+
+    public void AddBuff(BuffData buffData)
+    {
+        buffController.AddBuff(buffData);
+
+        if (uiManager != null)
+        {
+            uiManager.ShowBuffPopup(buffData.GetDescription(), transform.position);
+        }
     }
 }
