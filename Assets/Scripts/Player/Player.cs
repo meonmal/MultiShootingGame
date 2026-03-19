@@ -11,6 +11,8 @@ public class Player : MonoBehaviour, IDamageble
     private LevelUpManager levelUpManager;
     [SerializeField]
     private UIManager uiManager;
+    [SerializeField]
+    private BuffUI buffUI;
 
     private float currentHP;
 
@@ -42,21 +44,53 @@ public class Player : MonoBehaviour, IDamageble
 
     public void LeveUp(StatType type)
     {
-        runtime.LevelUp(type);
+        if (type == StatType.PlayerHP)
+        {
+            float oldMaxHP = runtime.GetBaseStat(StatType.PlayerHP);
+
+            runtime.LevelUp(type);
+
+            float newMaxHP = runtime.GetBaseStat(StatType.PlayerHP);
+            float increase = newMaxHP - oldMaxHP;
+
+            currentHP += increase;
+            currentHP = Mathf.Clamp(currentHP, 0, newMaxHP);
+        }
+        else
+        {
+            runtime.LevelUp(type);
+        }
     }
 
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
+        currentHP = Mathf.Clamp(currentHP, 0, GetStats(StatType.PlayerHP));
     }
 
     public void AddBuff(BuffData buffData)
     {
         buffController.AddBuff(buffData);
+        buffUI.AddBuff(buffData);
 
         if (uiManager != null)
         {
             uiManager.ShowBuffPopup(buffData.GetDescription(), transform.position);
         }
+    }
+
+    public float GetBaseStats(StatType type)
+    {
+        return runtime.GetBaseStat(type);
+    }
+
+    public float GetNextBaseStats(StatType type)
+    {
+        return runtime.GetNextStat(type);
+    }
+
+    public float GetBaseDeltaStats(StatType type)
+    {
+        return runtime.GetDelta(type);
     }
 }

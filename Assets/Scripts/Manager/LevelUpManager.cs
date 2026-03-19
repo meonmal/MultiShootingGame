@@ -109,9 +109,9 @@ public class LevelUpManager : MonoBehaviour
                 icons[i].sprite = data.icon;
                 titles[i].text = data.title;
 
-                float current = _player.RunTimeStats.GetStat(statType);
-                float next = _player.RunTimeStats.GetNextStat(statType);
-                float delta = _player.RunTimeStats.GetDelta(statType);
+                float current = _player.GetBaseStats(statType);
+                float next = _player.GetNextBaseStats(statType);
+                float delta = _player.GetBaseDeltaStats(statType);
 
                 string deltaText = delta > 0 ? $"+{delta}" : $"{delta}";
                 descs[i].text = $"{data.description}\n{current} ¡æ {next} ({deltaText})";
@@ -127,7 +127,7 @@ public class LevelUpManager : MonoBehaviour
 
     private void SelectOption(StatType statType)
     {
-        _player.RunTimeStats.LevelUp(statType);
+        _player.LeveUp(statType);
         Close();
     }
 }
