@@ -150,6 +150,7 @@ public class SoundManager : MonoBehaviour
         sfxVolume = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 1f);
 
         bgmSource.volume = bgmVolume;
+        sfxSource.volume = sfxVolume;
     }
 
     public void PlayBgm(BgmType type)
@@ -200,6 +201,7 @@ public class SoundManager : MonoBehaviour
     public void SetSfxVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);
+        sfxSource.volume = sfxVolume;
 
         SaveVolume();
     }

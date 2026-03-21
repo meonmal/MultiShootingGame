@@ -113,8 +113,8 @@ public class LevelUpManager : MonoBehaviour
                 float next = _player.GetNextBaseStats(statType);
                 float delta = _player.GetBaseDeltaStats(statType);
 
-                string deltaText = delta > 0 ? $"+{delta}" : $"{delta}";
-                descs[i].text = $"{data.description}\n{current} ¡æ {next} ({deltaText})";
+                string deltaText = delta > 0 ? $"+{delta:F1}" : $"{delta:F1}";
+                descs[i].text = $"{data.description}\n{current:F1} ¡æ {next:F1} ({deltaText})";
 
                 buttons[i].onClick.AddListener(() => SelectOption(statType));
             }
