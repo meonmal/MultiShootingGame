@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BuffData 4
   m_EditorClassIdentifier: 
   statType: 1
-  valueType: 0
-  value: 2
-  duration: 5
+  valueType: 1
+  value: 1.5
+  duration: 3
+  icon: {fileID: -2000988074, guid: 42eca34bb05eb054a97d4bf4eebcbed1, type: 3}
+  dropWeight: 1

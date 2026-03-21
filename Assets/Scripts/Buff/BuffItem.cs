@@ -46,6 +46,7 @@ public class BuffItem : MonoBehaviour
         if (player == null)
             return;
 
+        SoundManager.Instance.PlaySfx(SfxType.BuffPickup);
         player.AddBuff(buffData);
         ReturnToPool();
     }

@@ -50,7 +50,7 @@ public class BuffData : ScriptableObject
             case StatType.PlayerDamage:
                 return "공격력 증가!";
             case StatType.BulletSpeed:
-                return "공격속도 증가!";
+                return "총알속도 증가!";
             case StatType.CoolTime:
                 return "쿨타임 감소!";
             default:

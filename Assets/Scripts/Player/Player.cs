@@ -44,6 +44,8 @@ public class Player : MonoBehaviour, IDamageble
 
     public void LeveUp(StatType type)
     {
+        SoundManager.Instance.PlaySfx(SfxType.LevelUp);
+
         if (type == StatType.PlayerHP)
         {
             float oldMaxHP = runtime.GetBaseStat(StatType.PlayerHP);
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour, IDamageble
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
+        SoundManager.Instance.PlaySfx(SfxType.PlayerHit);
         currentHP = Mathf.Clamp(currentHP, 0, GetStats(StatType.PlayerHP));
     }
 

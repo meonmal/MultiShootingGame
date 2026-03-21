@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f425ff2b709f7b049b5c9a55219b352c, type: 3}
   m_Name: BuffData 6
   m_EditorClassIdentifier: 
-  statType: 1
+  statType: 3
   valueType: 0
   value: 2
   duration: 5
+  icon: {fileID: -199467177, guid: 42eca34bb05eb054a97d4bf4eebcbed1, type: 3}
+  dropWeight: 1

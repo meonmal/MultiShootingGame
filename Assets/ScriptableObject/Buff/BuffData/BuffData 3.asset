@@ -16,3 +16,5 @@ MonoBehaviour:
   valueType: 0
   value: 2
   duration: 5
+  icon: {fileID: 1225511822, guid: 42eca34bb05eb054a97d4bf4eebcbed1, type: 3}
+  dropWeight: 1

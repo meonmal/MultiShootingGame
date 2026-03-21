@@ -49,9 +49,11 @@ public class Enemy : MonoBehaviour, IDamageble
     public void TakeDamage(float damage)
     {
         currentHP -= damage;
+        SoundManager.Instance.PlaySfx(SfxType.EnemyHit);
 
         if(currentHP <= 0)
         {
+            SoundManager.Instance.PlaySfx(SfxType.EnemyDead);
             Die();
         }
     }

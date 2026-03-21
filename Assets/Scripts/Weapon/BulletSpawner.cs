@@ -34,6 +34,8 @@ public class BulletSpawner : MonoBehaviour
 
             Bullet bullet = pool.Get();
 
+            SoundManager.Instance.PlaySfx(SfxType.PlayerShoot);
+
             bullet.transform.position = SpawnPosition();
 
             yield return new WaitForSeconds(spawnTime);
