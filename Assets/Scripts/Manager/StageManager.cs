@@ -17,6 +17,10 @@ public class StageManager : MonoBehaviour
     private StageData[] stageDatas;
     [SerializeField]
     private Transform bossSpawnPoint;
+    [SerializeField]
+    private EnemySpawner enemySpawner;
+    [SerializeField]
+    private GameObject gameClearPanel;
 
     private Player player;
     private BossBase currentBoss;
@@ -27,6 +31,8 @@ public class StageManager : MonoBehaviour
     private StageState currentState = StageState.None;
 
     public BossBase CurrentBoss => currentBoss;
+    public int CurrentStageIndex => currentStageIndex;
+    public float CurrentStageTime => currentStageTime;
 
     public void Init(Player targetPlayer)
     {
@@ -69,6 +75,9 @@ public class StageManager : MonoBehaviour
         currentState = StageState.Running;
 
         Debug.Log($"스테이지 {stageDatas[currentStageIndex].stageIndex} 시작");
+
+        StageData stageData = stageDatas[currentStageIndex];
+        enemySpawner.SetStageEnemies(stageData.normalEnemyPrefabs);
     }
 
     private void SpawnBoss()
@@ -82,6 +91,7 @@ public class StageManager : MonoBehaviour
 
         hasBossSpawned = true;
         currentState = StageState.BossFight;
+        SoundManager.Instance.PlayBgm(BgmType.Boss);
 
         currentBoss = Instantiate(stageData.bossPrefab, bossSpawnPoint.position, Quaternion.identity);
         currentBoss.Init(player.transform);
@@ -95,6 +105,7 @@ public class StageManager : MonoBehaviour
         boss.OnDead -= HandleBossDead;
         currentBoss = null;
         currentState = StageState.Clear;
+        SoundManager.Instance.PlayBgm(BgmType.Game);
 
         Debug.Log($"스테이지 {stageDatas[currentStageIndex].stageIndex} 클리어");
 
@@ -109,6 +120,8 @@ public class StageManager : MonoBehaviour
         {
             currentState = StageState.End;
             Debug.Log("모든 스테이지 클리어");
+            Time.timeScale = 0f;
+            gameClearPanel.SetActive(true);
             return;
         }
 

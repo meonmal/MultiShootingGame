@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c47845f6c20a1d47b2fbe31dcf55070, type: 3}
   m_Name: StageData1
   m_EditorClassIdentifier: 
+  normalEnemyPrefabs:
+  - {fileID: 1125596591239681942, guid: fea398d0299c2b34fa3ccceee7c899cb, type: 3}
+  - {fileID: 1125596591239681942, guid: 55f6efb78a6435141ba88d147ff5d7c1, type: 3}
   stageIndex: 0
   bossSpawnTime: 10
   bossPrefab: {fileID: 96646497659573702, guid: 0db6bd4f3fb2311409cb3ee703d0ebff, type: 3}

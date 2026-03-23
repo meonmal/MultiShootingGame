@@ -7,14 +7,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private float spawnTime;
     [SerializeField]
-    private Enemy[] enemyPrefabs;
-    [SerializeField]
     private PlayerExperience playerExperience;
     [SerializeField]
     private BuffDropManager buffDropManager;
     [SerializeField]
     private StageManager stageManager;
 
+    private Enemy[] enemyPrefabs;
     private Collider2D coll;
 
     private IObjectPool<Enemy> pool;
@@ -35,6 +34,11 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Spawn());
+    }
+
+    public void SetStageEnemies(Enemy[] enemies)
+    {
+        enemyPrefabs = enemies;
     }
 
     private IEnumerator Spawn()

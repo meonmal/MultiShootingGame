@@ -62,11 +62,13 @@ public abstract class BossBase : MonoBehaviour, IDamageble
         }
 
         currentHp -= damage;
+        SoundManager.Instance.PlaySfx(SfxType.EnemyHit);
 
-        if(currentHp <= 0f)
+        if (currentHp <= 0f)
         {
             currentHp = 0f;
             Die();
+            SoundManager.Instance.PlaySfx(SfxType.EnemyDead);
         }
     }
 

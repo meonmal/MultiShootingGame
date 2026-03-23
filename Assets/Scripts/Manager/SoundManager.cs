@@ -5,6 +5,7 @@ public enum BgmType
 {
     Title,
     Game,
+    Boss,
     Result
 }
 

@@ -13,6 +13,8 @@ public class Player : MonoBehaviour, IDamageble
     private UIManager uiManager;
     [SerializeField]
     private BuffUI buffUI;
+    [SerializeField]
+    private GameObject gameOverPanel;
 
     private float currentHP;
 
@@ -69,6 +71,12 @@ public class Player : MonoBehaviour, IDamageble
         currentHP -= damage;
         SoundManager.Instance.PlaySfx(SfxType.PlayerHit);
         currentHP = Mathf.Clamp(currentHP, 0, GetStats(StatType.PlayerHP));
+
+        if(currentHP <= 0)
+        {
+            Time.timeScale = 0f;
+            gameOverPanel.SetActive(true);
+        }
     }
 
     public void AddBuff(BuffData buffData)
