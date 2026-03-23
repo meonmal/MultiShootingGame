@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
     private const string RESOLUTION_INDEX_KEY = "RESOLUTION_INDEX";
     private const string FULLSCREEN_KEY = "FULLSCREEN";
+    private const string ANTI_ALIASING_KEY = "ANTI_ALIASING";
+    private const string FRAME_RATE_KEY = "FRAME_RATE";
 
     [SerializeField]
     private TMP_Dropdown resolutionDropdown;
@@ -16,6 +19,12 @@ public class SettingManager : MonoBehaviour
     private Slider bgmSlider;
     [SerializeField]
     private Slider sfxSlider;
+    [SerializeField]
+    private TMP_Dropdown antiAliasingDropdown;
+    [SerializeField]
+    private TMP_Dropdown frameRateDropdown;
+    [SerializeField]
+    private Camera mainCamera;
 
     private Resolution[] resolutions;
     private List<Resolution> filteredResolutions = new();
@@ -91,6 +100,91 @@ public class SettingManager : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
 
         fullScreenToggle.isOn = isFullScreen;
+
+        LoadGraphicsSettings();
+    }
+
+    private void LoadGraphicsSettings()
+    {
+        int aa = PlayerPrefs.GetInt(ANTI_ALIASING_KEY, 2); // ±âº» SMAA
+        int frame = PlayerPrefs.GetInt(FRAME_RATE_KEY, 60);
+
+        ApplyAntiAliasing(aa);
+        ApplyFrameRate(frame);
+
+        Debug.Log($"aa = {aa}, frame = {frame}");
+
+        antiAliasingDropdown.value = aa;
+        antiAliasingDropdown.RefreshShownValue();
+
+        frameRateDropdown.value = GetFrameDropdownIndex(frame);
+        frameRateDropdown.RefreshShownValue();
+
+        Debug.Log($"aa dropdown = {antiAliasingDropdown.value}, frame dropdown = {frameRateDropdown.value}");
+    }
+
+    private void ApplyAntiAliasing(int index)
+    {
+        var additionalData = mainCamera.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+
+        switch (index)
+        {
+            case 0:
+                additionalData.antialiasing = AntialiasingMode.None;
+                break;
+            case 1:
+                additionalData.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
+                break;
+            case 2:
+                additionalData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                break;
+        }
+    }
+
+    private void ApplyFrameRate(int frame)
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = frame;
+    }
+
+    public void OnAntiAliasingChanged(int index)
+    {
+        ApplyAntiAliasing(index);
+
+        PlayerPrefs.SetInt(ANTI_ALIASING_KEY, index);
+        PlayerPrefs.Save();
+    }
+
+    public void OnFrameRateChanged(int index)
+    {
+        int frame = GetFrameFromIndex(index);
+
+        ApplyFrameRate(frame);
+
+        PlayerPrefs.SetInt(FRAME_RATE_KEY, frame);
+        PlayerPrefs.Save();
+    }
+
+    private int GetFrameFromIndex(int index)
+    {
+        switch (index)
+        {
+            case 0: return 30;
+            case 1: return 60;
+            case 2: return 144;
+        }
+        return 60;
+    }
+
+    private int GetFrameDropdownIndex(int frame)
+    {
+        switch (frame)
+        {
+            case 30: return 0;
+            case 60: return 1;
+            case 144: return 2;
+        }
+        return 1;
     }
 
     private void InitSoundUI()
@@ -108,6 +202,8 @@ public class SettingManager : MonoBehaviour
         fullScreenToggle.onValueChanged.AddListener(OnFullScreenChanged);
         bgmSlider.onValueChanged.AddListener(OnBgmVolumeChanged);
         sfxSlider.onValueChanged.AddListener(OnSfxVolumeChanged);
+        antiAliasingDropdown.onValueChanged.AddListener(OnAntiAliasingChanged);
+        frameRateDropdown.onValueChanged.AddListener(OnFrameRateChanged);
     }
 
     private void OnDestroy()
@@ -116,6 +212,8 @@ public class SettingManager : MonoBehaviour
         fullScreenToggle.onValueChanged.RemoveListener(OnFullScreenChanged);
         bgmSlider.onValueChanged.RemoveListener(OnBgmVolumeChanged);
         sfxSlider.onValueChanged.RemoveListener(OnSfxVolumeChanged);
+        antiAliasingDropdown.onValueChanged.RemoveListener(OnAntiAliasingChanged);
+        frameRateDropdown.onValueChanged.RemoveListener(OnFrameRateChanged);
     }
 
     public void OnResolutionChanged(int index)
