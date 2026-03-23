@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c47845f6c20a1d47b2fbe31dcf55070, type: 3}
+  m_Name: StageData1
+  m_EditorClassIdentifier: 
+  stageIndex: 0
+  bossSpawnTime: 10
+  bossPrefab: {fileID: 96646497659573702, guid: 0db6bd4f3fb2311409cb3ee703d0ebff, type: 3}

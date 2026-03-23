@@ -12,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
     private PlayerExperience playerExperience;
     [SerializeField]
     private BuffDropManager buffDropManager;
+    [SerializeField]
+    private StageManager stageManager;
 
     private Collider2D coll;
 
@@ -39,9 +41,12 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            Enemy enemy = pool.Get();
-            enemy.transform.position = SpawnPosition();
-            enemy.Init(playerExperience, buffDropManager);
+            if(stageManager.GetCurrentState() == StageState.Running)
+            {
+                Enemy enemy = pool.Get();
+                enemy.transform.position = SpawnPosition();
+                enemy.Init(playerExperience, buffDropManager);
+            }
 
             yield return new WaitForSeconds(spawnTime);
         }

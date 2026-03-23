@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamageble
     private EnemyStats enemyStats;
 
     private float currentHP;
+    private float dieX = 12f;
 
     private Rigidbody2D rigid;
     private IObjectPool<Enemy> _pool;
@@ -79,6 +80,11 @@ public class Enemy : MonoBehaviour, IDamageble
     private void Movement()
     {
         rigid.linearVelocity = Vector2.left * enemyStats.EnemySpeed;
+
+        if(transform.position.x >= dieX)
+        {
+            Die();
+        }
     }
 
     private void ThisRelease()
