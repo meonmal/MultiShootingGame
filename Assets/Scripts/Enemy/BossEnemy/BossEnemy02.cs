@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 전체적으로 BossEnemy01과 같지만
+/// 총알의 개수와 발사 각도가 조금 다르다.
+/// 그 부분만 주석으로 적고 나머지는 BossEnemy01을 참고하길 바람.
+/// </summary>
 public class BossEnemy02 : BossBase
 {
     [SerializeField]
@@ -15,6 +20,9 @@ public class BossEnemy02 : BossBase
     private float bulletSpeed;
     [SerializeField]
     private float bulletDamage;
+    /// <summary>
+    /// 총알끼리의 간격.
+    /// </summary>
     [SerializeField]
     private float spreadAngle = 15f;
 
@@ -100,6 +108,10 @@ public class BossEnemy02 : BossBase
         Fire();
     }
 
+    /// <summary>
+    /// 2번 보스의 총알 발사 함수.
+    /// 이 보스는 한번에 총알을 3개만 발사할 예정이다.
+    /// </summary>
     private void Fire()
     {
         if (bulletPool == null || firePoint == null)
@@ -107,13 +119,16 @@ public class BossEnemy02 : BossBase
             return;
         }
 
+        // 우선 중심 축을 설정한다.
         Vector2 centerDirection = Vector2.left;
-        Vector2 upDirection = RotateDirection(centerDirection, spreadAngle);
-        Vector2 downDirection = RotateDirection(centerDirection, -spreadAngle);
 
-        FireBullet(centerDirection);
-        FireBullet(upDirection);
-        FireBullet(downDirection);
+        // for문을 이용해서 총알이 한번에 3번 발사할 수 있도록 만들어준다.
+        for(int i = -1; i <= 1; i++)
+        {
+            float angle = spreadAngle * i;
+            Vector2 dir = RotateDirection(centerDirection, angle);
+            FireBullet(dir);
+        }
     }
 
     private void FireBullet(Vector2 direction)
@@ -131,15 +146,15 @@ public class BossEnemy02 : BossBase
         bullet.Fire(direction, bulletSpeed, bulletDamage);
     }
 
+    /// <summary>
+    /// 주어진 방향 벡터를 특정 각도만큼 회전시켜 반환하는 함수.
+    /// Quaternion을 이용해 회전을 처리한다.
+    /// </summary>
+    /// <param name="direction">기준이 되는 방향 벡터.</param>
+    /// <param name="angle">회전할 각도. (도 단위)</param>
+    /// <returns>회전된 방향 벡터.</returns>
     private Vector2 RotateDirection(Vector2 direction, float angle)
     {
-        float radian = angle * Mathf.Deg2Rad;
-        float cos = Mathf.Cos(radian);
-        float sin = Mathf.Sin(radian);
-
-        float x = direction.x * cos - direction.y * sin;
-        float y = direction.x * sin + direction.y * cos;
-
-        return new Vector2(x, y).normalized;
+        return (Quaternion.Euler(0f, 0f, angle) * direction).normalized;
     }
 }

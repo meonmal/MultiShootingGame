@@ -24,11 +24,23 @@ public class EnemyStats : ScriptableObject
     또한 값을 수정할 필요도 없기 때문에 읽기 전용으로 프로퍼티를 써준다.
      */
 
+    /// <summary>
+    /// 적의 데미지.
+    /// </summary>
     public float EnemyDamage => enemyDamage;
 
+    /// <summary>
+    /// 적의 이동속도.
+    /// </summary>
     public float EnemySpeed => enemySpeed;
 
+    /// <summary>
+    /// 적의 최대 체력.
+    /// </summary>
     public float EnemyHP => enemyHP;
 
+    /// <summary>
+    /// 적을 죽였을 때 플레이어가 얻을 경험치양
+    /// </summary>
     public float EnemyExp => enemyExp;
 }

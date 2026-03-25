@@ -13,6 +13,7 @@ public class TitleButton : MonoBehaviour
 
     public void MouseUp()
     {
+        SoundManager.Instance.PlaySfx(SfxType.ButtonClick);
         transform.localScale = bigScale;
     }
 
